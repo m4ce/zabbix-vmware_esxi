@@ -2,11 +2,14 @@
 
 This external check plugin allows to monitor a standalone VMware ESXi through the built-in CIM interface. There are a few other plugins out there that let you accomplish the same, mostly for Nagios or similars.
 
-What is unique about this plugin is that it massively leverages low-level discovery features in Zabbix.
+<u><b>What is unique about this plugin is that it massively leverages the powerful low-level discovery features available in Zabbix</b></u>.
 
-For this setup, you would need to add a user that has CIM interaction permissions on your ESXi before you can actually make use of the template and the respective plugin.
+## Installation
+For this setup to work, you would first need to create a user with CIM interaction permissions on your ESXi(s).
 
-In order to accomplish that, execute the following snippet on your ESXi server. If you deploy your ESXi servers using kickstart, you can optionally add it to your template so that every newly-deployed box will get it (Note: the user needs to be part of the root group, else it won't be able to access the CIM interface even though it has the permissions set over the role).
+In order to accomplish that, execute the following snippet on your ESXi server(s). If you deploy your ESXi server(s) using kickstart, you can optionally add the snippet to your template so that every newly-deployed box will get it.
+
+<b>Note</b>: the user must be part of the root group, else it won't be able to access the CIM interface even though it has the permissions to do so.
 
 ```
 /usr/lib/vmware/auth/bin/adduser -s /sbin/nologin -D -H zabbix -G root
@@ -15,7 +18,7 @@ vim-cmd vimsvc/auth/role_add CIM_ReadOnly Host.Cim.CimInteraction System.Anonymo
 vim-cmd vimsvc/auth/entity_permission_add vim.Folder:ha-folder-root 'zabbix' false CIM_ReadOnly true
 ```
 
-Before importing the XML template, you can optionally add the following value mappings into Zabbix (this is really for cosmetic reasons):
+Before importing the XML template through the web interface, you can optionally add the following value mappings into Zabbix (this is really for cosmetic reasons, mainly to make latest data look prettier and errors a bit more human friendly).
 
 ```
 mysql> SELECT name, value, newvalue FROM valuemaps INNER JOIN mappings ON valuemaps.valuemapid = mappings.valuemapid WHERE name LIKE 'VMware%';
@@ -79,4 +82,34 @@ mysql> SELECT name, value, newvalue FROM valuemaps INNER JOIN mappings ON valuem
 
 The template relies on two main macros: {#VMWARE_USER} and {#VMWARE_PASSWORD}. Given that, you need to make sure they are defined either at the global level, template level or host level.
 
-Some screenshots will follow soon.
+## Screenshots
+
+Dashboard example:
+
+![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-dashboard.png)
+
+Latest data hardware monitoring (discovered via LLD):
+
+![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-latest_data1.png)
+
+![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-latest_data2.png)
+
+![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-latest_data3.png)
+
+![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-latest_data4.png)
+
+![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-latest_data5.png)
+
+![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-latest_data6.png)
+
+![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-latest_data7.png)
+
+![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-latest_data8.png)
+
+![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-latest_data9.png)
+
+![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-latest_data10.png)
+
+Hypervisor monitoring using Zabbix built-in simple checks:
+
+![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-latest_data11.png)
