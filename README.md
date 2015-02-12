@@ -77,6 +77,6 @@ mysql> SELECT name, value, newvalue FROM valuemaps INNER JOIN mappings ON valuem
 +-------------------------------------------+-------+----------------------------+
 ```
 
-The template is configured to use two main macros, which are {#VMWARE_USER} and {#VMWARE_PASSWORD} respectively. Therefore, you would need to define them either at the global level or, template level or host level.
+The template relies on two main macros: {#VMWARE_USER} and {#VMWARE_PASSWORD}. Given that, you need to make sure they are defined either at the global level, template level or host level.
 
 Some screenshots will follow soon.
