@@ -113,3 +113,6 @@ Latest data hardware monitoring (discovered via LLD):
 Hypervisor monitoring using Zabbix built-in simple checks:
 
 ![ScreenShot](https://raw.github.com/m4ce/zabbix-vmware_esxi/master/screenshots/zabbix-vmware-latest_data11.png)
+
+## Contact
+Matteo Cerutti - matteo.cerutti@hotmail.co.uk
