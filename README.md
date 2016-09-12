@@ -20,6 +20,8 @@ vim-cmd vimsvc/auth/entity_permission_add vim.Folder:ha-folder-root 'zabbix' fal
 
 Before importing the XML template through the web interface, you can optionally add the following value mappings into Zabbix (this is really for cosmetic reasons, mainly to make latest data look prettier and errors a bit more human friendly).
 
+Since Zabbix 3 mappings can be exported and imported. Import mappings xml in "mappings".
+
 ```
 mysql> SELECT name, value, newvalue FROM valuemaps INNER JOIN mappings ON valuemaps.valuemapid = mappings.valuemapid WHERE name LIKE 'VMware%';
 +-------------------------------------------+-------+----------------------------+
